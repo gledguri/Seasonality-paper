@@ -58,8 +58,7 @@ collapse <- function(tax, int, otu) {
 	return(cbind(tax, int, otu))
 }
 
-collapse_otu2 <- function (otu, metadata = mmn,fun="Sum") 
-{
+collapse_otu2 <- function (otu, metadata = mmn,fun="Sum") {
 	cat("Is collapse.name column created in the metadata?")
 	bb <- as.data.frame(otu)
 	colnames(bb) <- metadata[, "collapse.name"]
@@ -90,6 +89,8 @@ library(ggplot2)
 library(vegan)
 library(MoMAColors)
 library(indicspecies)
+library(lme4)
+library(here)
 
 overview <- data.frame(
 	Year = c(2018, 2019, 2019, 2020, 2020, 2021, 2021, 2021, 2022, 2022),
@@ -606,9 +607,9 @@ overview
 
 # Import data -----------------------------------------------------------------------
 
-otu <- read.csv("/Users/a36142/Library/CloudStorage/OneDrive-Havforskningsinstituttet/IMR/Data/eDNA/Paper_III/6_OTU_TAX_META/otu.csv",check.names = FALSE)
-tax <- read.csv("/Users/a36142/Library/CloudStorage/OneDrive-Havforskningsinstituttet/IMR/Data/eDNA/Paper_III/6_OTU_TAX_META/tax.csv")
-mm <- read.csv("/Users/a36142/Library/CloudStorage/OneDrive-Havforskningsinstituttet/IMR/Data/eDNA/Paper_III/6_OTU_TAX_META/Metadata_curated.csv")
+otu <- read.csv(here('6_OTU_TAX_META','otu.csv'),check.names = FALSE)
+tax <- read.csv(here('6_OTU_TAX_META','tax.csv'))
+mm <- read.csv(here('6_OTU_TAX_META','Metadata_curated.csv'))
 
 
 # Prepare the data ------------------------------------------------------------------
@@ -647,136 +648,183 @@ alpha_summary <-
 						q_75=quantile(Rich,0.75), .groups = 'drop')
 
 
-# # Figure 2 - Alpha metrics ----------------------------------------------------------
-# 
-# cc <- c("BA" = "deepskyblue2",
-# 				"FR" = "orange2",
-# 				"OL" = "tomato2",
-# 				"BE" = "green3")
-# 
-# p1 <-
-# 	ggplot() +
-# 	geom_jitter(data = alpha %>% filter(Season=="Autumn"),
-# 							aes(x = as.character(Year), y = Rich, color=Location), position=position_dodge(width=0.4),alpha=0.5) +
-# 	theme_classic() +
-# 	geom_errorbar(data = alpha_summary %>% 	filter(Season=="Autumn"),
-# 								aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location),width = 0.3,
-# 								position = position_dodge(width = 0.4))+
-# 	geom_point(data = alpha_summary %>% 	filter(Season=="Autumn"),
-# 						 aes(x = as.character(Year), y = richness_mean, color=Location),
-# 						 position = position_dodge(width = 0.4), size = 6) + # Nudge points to the right
-# 	ylim(3, 43)+
-# 	ylab("Species richness")+
-# 	xlab("")+
-# 	scale_color_manual(values=cc)+
-# 	facet_wrap(~Season)+
-# 	theme(legend.position = "none",
-# 				axis.title.y = element_text(size = 19),
-# 				plot.margin = margin(0.1, 0, 0.5, 0.5, "cm"),
-# 				axis.title.x = element_text(size = 19),
-# 				legend.title = element_text(size=17),
-# 				legend.key.height = unit(1.0, 'cm'),
-# 				legend.text = element_text(size=16),
-# 				axis.text.x = element_text(size = 17),
-# 				strip.text = element_text(size = 17, color="white"),
-# 				strip.background = element_rect(fill = "deepskyblue4", color = "black", size = 0.5, linetype = "dotted"),
-# 				axis.text.y=element_text(size=15))
-# p2 <-
-# 	ggplot() +
-# 	geom_jitter(data = alpha %>% filter(Season=="Spring"),
-# 							aes(x = as.character(Year), y = Rich, color=Location), position=position_dodge(width=0.4),alpha=0.5) +
-# 	theme_classic() +
-# 	geom_errorbar(data = alpha_summary %>% 	filter(Season=="Spring"),
-# 								aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location),width = 0.3,
-# 								position = position_dodge(width = 0.4))+
-# 	geom_point(data = alpha_summary %>% 	filter(Season=="Spring"),
-# 						 aes(x = as.character(Year), y = richness_mean, color=Location),
-# 						 position = position_dodge(width = 0.4), size = 6) + # Nudge points to the right
-# 	ylim(3, 43)+
-# 	ylab("Species richness")+
-# 	xlab("")+
-# 	scale_color_manual(values=cc)+
-# 	facet_wrap(~Season)+
-# 	theme(legend.position = "none",
-# 				axis.title.y = element_blank(),
-# 				plot.margin = margin(0.1, 0.0, 0.5, 0.5, "cm"),
-# 				axis.title.x = element_text(size = 19),
-# 				legend.title = element_text(size=17),
-# 				legend.key.height = unit(1.0, 'cm'),
-# 				legend.text = element_text(size=16),
-# 				axis.text.x = element_text(size = 17),
-# 				axis.text.y = element_blank(),
-# 				axis.line.y = element_blank(),
-# 				strip.background = element_rect(fill = "orange2", color = "black", size = 0.5, linetype = "dotted"),
-# 				strip.text = element_text(size = 17),
-# 				axis.ticks.y = element_blank())
-# 
-# p3 <-
-# 	ggplot() +
-# 	geom_jitter(data = alpha %>% filter(Season=="Summer"),
-# 							aes(x = as.character(Year), y = Rich, color=Location), position=position_dodge(width=0.4),alpha=0.5) +
-# 	theme_classic() +
-# 	geom_errorbar(data = alpha_summary %>% filter(Season=="Summer"),
-# 								aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location),width = 0.3,
-# 								position = position_dodge(width = 0.4))+
-# 	geom_point(data = alpha_summary %>% filter(Season=="Summer"),
-# 						 aes(x = as.character(Year), y = richness_mean, color=Location),
-# 						 position = position_dodge(width = 0.4), size = 6) + # Nudge points to the right
-# 	ylim(3, 43)+
-# 	ylab("Species richness")+
-# 	xlab("")+
-# 	scale_color_manual(values=cc)+
-# 	facet_wrap(~Season)+
-# 	theme(legend.position = "none",
-# 				axis.title.y = element_blank(),
-# 				plot.margin = margin(0.1, -0.5, 0.5, 0.5, "cm"),
-# 				axis.title.x = element_text(size = 19),
-# 				legend.title = element_text(size=17),
-# 				legend.key.height = unit(1.0, 'cm'),
-# 				legend.text = element_text(size=16),
-# 				axis.text.x = element_text(size = 17),
-# 				axis.text.y = element_blank(),
-# 				axis.line.y = element_blank(),
-# 				strip.text = element_text(size = 17),
-# 				strip.background = element_rect(fill = "lightblue", color = "black", size = 0.5, linetype = "dotted"),
-# 				axis.ticks.y = element_blank())
-# 
-# pp1 <- cowplot::plot_grid(p1,p2,p3,align = "h",rel_widths = c(5,2,3),ncol = 3)
-# 
-# cc1 <- c("Balfsfjord" = "deepskyblue2",
-# 				"Frakkfjord" = "orange2",
-# 				"Olderfjord" = "tomato2",
-# 				"Bergsfjord" = "green3")
-# 
-# p1_leg <-
-# 	ggplot() +
-# 	theme_classic() +
-# 	geom_errorbar(data = alpha_summary %>%
-# 									mutate(Location=if_else(Location=="BA","Balfsfjord",Location)) %>%
-# 									mutate(Location=if_else(Location=="FR","Frakkfjord",Location)) %>%
-# 									mutate(Location=if_else(Location=="OL","Olderfjord",Location)) %>%
-# 									mutate(Location=if_else(Location=="BE","Bergsfjord",Location)), aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location))+
-# 	geom_point(data = alpha_summary %>%
-# 						 	mutate(Location=if_else(Location=="BA","Balfsfjord",Location)) %>%
-# 						 	mutate(Location=if_else(Location=="FR","Frakkfjord",Location)) %>%
-# 						 	mutate(Location=if_else(Location=="OL","Olderfjord",Location)) %>%
-# 						 	mutate(Location=if_else(Location=="BE","Bergsfjord",Location)),
-# 						 aes(x = as.character(Year), y = richness_mean, color=Location),size = 6) + # Nudge points to the right
-# 	scale_color_manual("Location",values=cc1)+
-# 	theme(plot.margin = margin(1, 1, 1, 0, "cm"),
-# 				legend.key.width = unit(1.2,"cm"),
-# 				legend.title = element_text(size=18),
-# 				legend.key.height = unit(0.8, 'cm'),
-# 				legend.text = element_text(size=16))
-# 
-# p1_leg_leg <- cowplot::get_legend(p1_leg+
-# 																		theme(legend.justification = c(0.5,0.5)))
-# 
-# # pp2 <- cowplot::plot_grid(pp1,p1_leg_leg,rel_widths = c(8,1.4),ncol = 2)
-# # ggsave(paste0("/Users/a36142/Library/CloudStorage/OneDrive-Havforskningsinstituttet/IMR/Data/eDNA/Paper_III/Plots",
-# # 							"/Figure_2_Alpha diversity.jpg"),pp2,width=35,height=25,units="cm")
+# Figure 2 - Alpha metrics ----------------------------------------------------------
+
+cc <- c("BA" = "deepskyblue2",
+				"FR" = "orange2",
+				"OL" = "tomato2",
+				"BE" = "green3")
+
+p1 <-
+	ggplot() +
+	geom_jitter(data = alpha %>% filter(Season=="Autumn"),
+							aes(x = as.character(Year), y = Rich, color=Location), position=position_dodge(width=0.4),alpha=0.5) +
+	theme_classic() +
+	geom_errorbar(data = alpha_summary %>% 	filter(Season=="Autumn"),
+								aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location),width = 0.3,
+								position = position_dodge(width = 0.4))+
+	geom_point(data = alpha_summary %>% 	filter(Season=="Autumn"),
+						 aes(x = as.character(Year), y = richness_mean, color=Location),
+						 position = position_dodge(width = 0.4), size = 6) + # Nudge points to the right
+	ylim(3, 43)+
+	ylab("Species richness")+
+	xlab("")+
+	scale_color_manual(values=cc)+
+	facet_wrap(~Season)+
+	theme(legend.position = "none",
+				axis.title.y = element_text(size = 19),
+				plot.margin = margin(0.1, 0, 0.5, 0.5, "cm"),
+				axis.title.x = element_text(size = 19),
+				legend.title = element_text(size=17),
+				legend.key.height = unit(1.0, 'cm'),
+				legend.text = element_text(size=16),
+				axis.text.x = element_text(size = 17),
+				strip.text = element_text(size = 17, color="white"),
+				strip.background = element_rect(fill = "deepskyblue4", color = "black", size = 0.5, linetype = "dotted"),
+				axis.text.y=element_text(size=15))
+p2 <-
+	ggplot() +
+	geom_jitter(data = alpha %>% filter(Season=="Spring"),
+							aes(x = as.character(Year), y = Rich, color=Location), position=position_dodge(width=0.4),alpha=0.5) +
+	theme_classic() +
+	geom_errorbar(data = alpha_summary %>% 	filter(Season=="Spring"),
+								aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location),width = 0.3,
+								position = position_dodge(width = 0.4))+
+	geom_point(data = alpha_summary %>% 	filter(Season=="Spring"),
+						 aes(x = as.character(Year), y = richness_mean, color=Location),
+						 position = position_dodge(width = 0.4), size = 6) + # Nudge points to the right
+	ylim(3, 43)+
+	ylab("Species richness")+
+	xlab("")+
+	scale_color_manual(values=cc)+
+	facet_wrap(~Season)+
+	theme(legend.position = "none",
+				axis.title.y = element_blank(),
+				plot.margin = margin(0.1, 0.0, 0.5, 0.5, "cm"),
+				axis.title.x = element_text(size = 19),
+				legend.title = element_text(size=17),
+				legend.key.height = unit(1.0, 'cm'),
+				legend.text = element_text(size=16),
+				axis.text.x = element_text(size = 17),
+				axis.text.y = element_blank(),
+				axis.line.y = element_blank(),
+				strip.background = element_rect(fill = "orange2", color = "black", size = 0.5, linetype = "dotted"),
+				strip.text = element_text(size = 17),
+				axis.ticks.y = element_blank())
+
+p3 <-
+	ggplot() +
+	geom_jitter(data = alpha %>% filter(Season=="Summer"),
+							aes(x = as.character(Year), y = Rich, color=Location), position=position_dodge(width=0.4),alpha=0.5) +
+	theme_classic() +
+	geom_errorbar(data = alpha_summary %>% filter(Season=="Summer"),
+								aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location),width = 0.3,
+								position = position_dodge(width = 0.4))+
+	geom_point(data = alpha_summary %>% filter(Season=="Summer"),
+						 aes(x = as.character(Year), y = richness_mean, color=Location),
+						 position = position_dodge(width = 0.4), size = 6) + # Nudge points to the right
+	ylim(3, 43)+
+	ylab("Species richness")+
+	xlab("")+
+	scale_color_manual(values=cc)+
+	facet_wrap(~Season)+
+	theme(legend.position = "none",
+				axis.title.y = element_blank(),
+				plot.margin = margin(0.1, -0.5, 0.5, 0.5, "cm"),
+				axis.title.x = element_text(size = 19),
+				legend.title = element_text(size=17),
+				legend.key.height = unit(1.0, 'cm'),
+				legend.text = element_text(size=16),
+				axis.text.x = element_text(size = 17),
+				axis.text.y = element_blank(),
+				axis.line.y = element_blank(),
+				strip.text = element_text(size = 17),
+				strip.background = element_rect(fill = "lightblue", color = "black", size = 0.5, linetype = "dotted"),
+				axis.ticks.y = element_blank())
+
+pp1 <- cowplot::plot_grid(p1,p2,p3,align = "h",rel_widths = c(5,2,3),ncol = 3)
+
+cc1 <- c("Balfsfjord" = "deepskyblue2",
+				"Frakkfjord" = "orange2",
+				"Olderfjord" = "tomato2",
+				"Bergsfjord" = "green3")
+
+p1_leg <-
+	ggplot() +
+	theme_classic() +
+	geom_errorbar(data = alpha_summary %>%
+									mutate(Location=if_else(Location=="BA","Balfsfjord",Location)) %>%
+									mutate(Location=if_else(Location=="FR","Frakkfjord",Location)) %>%
+									mutate(Location=if_else(Location=="OL","Olderfjord",Location)) %>%
+									mutate(Location=if_else(Location=="BE","Bergsfjord",Location)), aes(x = as.character(Year), ymin = q_25, ymax = q_75,color=Location))+
+	geom_point(data = alpha_summary %>%
+						 	mutate(Location=if_else(Location=="BA","Balfsfjord",Location)) %>%
+						 	mutate(Location=if_else(Location=="FR","Frakkfjord",Location)) %>%
+						 	mutate(Location=if_else(Location=="OL","Olderfjord",Location)) %>%
+						 	mutate(Location=if_else(Location=="BE","Bergsfjord",Location)),
+						 aes(x = as.character(Year), y = richness_mean, color=Location),size = 6) + # Nudge points to the right
+	scale_color_manual("Location",values=cc1)+
+	theme(plot.margin = margin(1, 1, 1, 0, "cm"),
+				legend.key.width = unit(1.2,"cm"),
+				legend.title = element_text(size=18),
+				legend.key.height = unit(0.8, 'cm'),
+				legend.text = element_text(size=16))
+
+p1_leg_leg <- cowplot::get_legend(p1_leg+
+																		theme(legend.justification = c(0.5,0.5)))
+
+pp2 <- cowplot::plot_grid(pp1,p1_leg_leg,rel_widths = c(8,1.4),ncol = 2)
+# ggsave(paste0("/Users/a36142/Library/CloudStorage/OneDrive-Havforskningsinstituttet/IMR/Data/eDNA/Paper_III/Plots",
+# 							"/Figure_2_Alpha diversity.jpg"),pp2,width=35,height=25,units="cm")
 
 
+model <- glmer(Rich ~ Season*Location + (1|Year), data = alpha, family = poisson())
+
+# model <- glmer(Rich ~ Season + (1 | Location), data = alpha, family = poisson())
+# model <- glmer(Rich ~ (Year*Season) + (1 | Location), data = alpha, family = poisson())
+summary(model)
+
+# Visualization: Predictions across years and seasons
+new_data <- expand.grid(
+	Location = unique(alpha$Location),
+	Year = unique(alpha$Year),
+	Season = unique(alpha$Season)
+)
+
+
+pred <- predict(model, new_data, se.fit=TRUE, type="response")
+pred <- cbind(new_data,pred)
+
+pred <-
+pred %>% 
+	unite('x',Location,Year,Season) %>% 
+	left_join(.,
+						alpha %>% 
+							group_by(Location,Year,Season) %>% 
+							summarise(Rich=mean(Rich)) %>% 
+							unite('x',Location,Year,Season) %>% 
+							mutate(pres=1)) %>% 
+	filter(pres==1) %>% select(-pres) %>% 
+	separate(x,into = c('Location','Year','Season'),sep='_') %>% 
+	mutate(diff=Rich-fit)
+	
+
+pred %>% unite('time',Season,Year) %>% arrange(time) %>% 
+	ggplot()+
+	geom_point(aes(x=time,y=fit,colour = Location),pch=19,size=6,alpha=0.8)+
+	geom_point(data=alpha_summary %>% unite('time',Season,Year) %>% arrange(time),
+						 aes(y=richness_mean,x=time,colour = Location),pch=19,size=3,
+						 position = position_dodge(width = 0.5))+
+	scale_color_manual("Location",values=cc)+
+	theme_bw()
+
+pred %>% unite('time',Season,Year) %>% arrange(time) %>% 
+	group_by(Location) %>% 
+	summarise(xsqr=mean(abs(diff)))
+	ggplot()+
+	geom_point(aes(x=Location,y=diff),pch=19,size=6)+
+	theme_bw()
+	
 
 # Multivariate analysis -------------------------------------------------------------
 
