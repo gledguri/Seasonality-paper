@@ -1,0 +1,37 @@
+"kingdom","phylum","class","order","family","genus","species","id","annotated_pident","best_identity","tot_reads","Mock_v4_NG_br1","Mock_v4_NG_br2","Mock_v4_NG_br3","Mock_v5_NH_br1","Mock_v5_NH_br2","Mock_v5_NH_br3"
+"Animalia","Chordata","Teleostei","Stomiiformes","Sternoptychidae","Maurolicus","Maurolicus muelleri","GG01_000603105",0.982,0.818181818181818,409256,20264,12210,34143,120892,58919,162828
+"Animalia","Chordata","Teleostei","Clupeiformes","Clupeidae","Clupea","Clupea harengus","GG01_000056339",1,1,287,9,8,6,189,31,44
+"Animalia","Chordata","Teleostei","Cypriniformes","Cyprinidae","Trigonostigma","Trigonostigma espei","GG01_000426045",1,1,33,0,0,0,12,4,17
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Melanogrammus|Merlangius","Melanogrammus aeglefinus|Merlangius merlangus","GG01_000075564",1,1,1023,20,17,10,250,420,306
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Boreogadus","Boreogadus saida","GG01_000737752",0.958,0.952941176470588,13096,0,2,0,4062,2832,6200
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Gadus","Gadus morhua","GG01_000414396",0.953,0.953488372093023,247544,35,108,62,82277,52758,112304
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Arctogadus","Arctogadus glacialis","GG01_000525702",0.973,0.930635838150289,403,0,0,0,122,53,228
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Pollachius","Pollachius virens","GG01_000021137",1,1,295,2,4,4,85,44,156
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Trisopterus","Trisopterus esmarkii","GG01_000064528",1,0.958823529411765,15,3,0,3,6,1,2
+"Animalia","Chordata","Teleostei","Gadiformes","Gadidae","Brosme","Brosme brosme","GG01_000000146",1,0.982352941176471,373363,15073,129247,74152,37606,34698,82587
+"Animalia","Chordata","Teleostei","Osmeriformes","Osmeridae","Mallotus","Mallotus villosus","GG01_000013817",0.994,0.994047619047619,179499,33,28,28,58157,31141,90112
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Cottidae","Triglops","Triglops murrayi","GG01_000317373",0.982,0.952662721893491,631,5,8,6,189,243,180
+"Animalia","Chordata","Teleostei","Perciformes","Stichaeidae","Leptoclinus","Leptoclinus maculatus","GG01_000803974",0.963,0.952941176470588,1636385,506459,321708,248840,194690,107860,256828
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Cottidae","Myoxocephalus","Myoxocephalus scorpius","GG01_000331380",0.963,0.946745562130177,309162,78758,19254,38,70522,48579,92011
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Cottidae","Artediellus","Artediellus scaber","GG01_000308143",1,0.970760233918129,191,0,0,0,47,36,108
+"Animalia","Chordata","Teleostei","Perciformes","Pholidae","Pholis","Pholis gunnellus","GG01_000361111",0.952,0.940828402366864,167059,54,40,20,52403,38406,76136
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Agonidae","Leptagonus","Leptagonus decagonus","GG01_000307692",1,1,52,0,0,0,52,0,0
+"Animalia","Chordata","Teleostei","Perciformes","Anarhichadidae","Anarhichas","Anarhichas spp.","GG01_000318622",0.994,0.988165680473373,895,57,52,38,354,146,248
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Cottidae","Artediellus|Icelus","Artediellus atlanticus|Icelus cataphractus|Icelus spatula","GG01_000309217",0.994,0.994047619047619,192,0,0,0,56,71,65
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Cottidae","Taurulus","Taurulus bubalis","GG01_000063155",1,0.988095238095238,47,6,1,6,10,14,10
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Cyclopteridae","Cyclopterus","Cyclopterus lumpus","GG01_000000011",1,0.994082840236686,520241,103918,103807,120553,58797,37921,95245
+"Animalia","Chordata","Teleostei","Gasterosteiformes","Gasterosteidae","Gasterosteus","Gasterosteus aculeatus","GG01_000318757",1,1,165,0,0,0,42,25,98
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Liparidae","Careproctus","Careproctus reinhardti","GG01_000354685",1,0.964285714285714,74,0,0,0,60,14,0
+"Animalia","Chordata","Teleostei","Scorpaeniformes","Liparidae","Liparis","Liparis montagui","GG01_000183697",1,0.988165680473373,34,1,5,1,10,8,9
+"Animalia","Chordata","Teleostei","Perciformes","Zoarcidae","Lycodes","Lycodes vahlii","GG01_000303302",1,1,1204,2,2,1,553,420,226
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Hippoglossoides","Hippoglossoides platessoides","GG01_000327961",0.976,0.976608187134503,252851,21,30,11,83715,50502,118572
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Pleuronectes","Pleuronectes platessa","GG01_000569113",0.959,0.95906432748538,135409,25,17,19,44253,27296,63799
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Platichthys","Platichthys flesus","GG01_000409612",0.976,0.976331360946746,419,0,1,0,100,59,259
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Limanda","Limanda limanda","GG01_000352593",0.982,0.982248520710059,100,0,0,0,40,14,46
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Glyptocephalus","Glyptocephalus cynoglossus","GG01_000019573",1,0.976331360946746,143,7,5,0,48,37,46
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Microstomus","Microstomus kitt","GG01_000020658",1,0.982248520710059,376,14,8,16,125,87,126
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Pleuronectidae","Hippoglossus","Hippoglossus hippoglossus","GG01_000032293",1,1,521,4,8,1,100,99,309
+"Animalia","Chordata","Teleostei","Pleuronectiformes","Scophthalmidae","Scophthalmus","Scophthalmus maximus","GG01_000742129",1,1,60,0,1,0,27,2,30
+"Animalia","Chordata","Teleostei","Salmoniformes","Salmonidae","Salmo","Salmo salar","GG01_000018378",1,1,233,12,19,6,61,39,96
+"Animalia","Chordata","Teleostei","Salmoniformes","Salmonidae","Salvelinus","Salvelinus alpinus","GG01_000309709",1,1,554,0,0,0,272,98,184
+"Animalia","Echinodermata","Echinoidea",NA,NA,NA,NA,"GG01_000320896",0.715909090909091,0.715909090909091,571,0,0,0,95,61,415
