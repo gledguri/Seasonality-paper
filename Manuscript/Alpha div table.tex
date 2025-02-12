@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\date{February 2025}
+
+\begin{document}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+        \hline
+        \textbf{Model} & \textbf{Formula} \\
+        \hline
+        Model 2 & Rich $\sim$ {Season} + {Location} + (1 $\mid$ Year) \\
+        Model 1 & Rich $\sim$ {Season} * {Location} + (1 $\mid$ Year) \\
+        \hline
+    \end{tabular}
+    \caption{Model Formulas}
+    \label{tab:models}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lccccccc}
+        \hline
+        \textbf{Model} & \textbf{npar} & \textbf{AIC} & \textbf{BIC} & \textbf{logLik} & \textbf{Deviance} & \textbf{Chisq} & \textbf{P-value} \\
+        \hline
+        model\_2 & 7 & 2143.1 & 2169.8 & -1064.5 & 2129.1 & 20.840 & 0.0001137 *** \\
+        model\_1 & 13 & 2122.2 & 2171.9 & -1048.1 & 2096.2 & 32.795 & 1.148e-05 *** \\
+        \hline
+    \end{tabular}
+    \caption{Model Comparison Statistics}
+    \label{tab:model_comparison}
+\end{table}
+
+
+Fromula:
+$Richness \sim Season \cdot Location + (1 | Year) (family \colon Poisson)$
+
+\begin{table}[h]
+    \centering
+    \caption{Fixed Effects Estimates}
+    \label{tab:fixed_effects}
+    \begin{tabular}{lcccc}
+        & Estimate & Std. Error & z value & P-value \\
+        \hline
+        Autumn - Bal (\textbf{Intercept}) & 2.74873 & 0.10217 & 26.903 & $<$\textbf{0.001} \\
+        \hline
+        Season(Spring) & 0.02136 & 0.06039 & 0.354 & 0.723 \\
+        Season(Summer) & 0.05594 & 0.05898 & 0.948 & 0.343 \\
+        \hline
+        Location(Ber) & 0.11000 & 0.07983 & 1.378 & 0.168 \\
+        Location(Fra) & -0.04389 & 0.07116 & -0.617 & 0.537 \\
+        Location(Old) & -0.01569 & 0.07596 & -0.207 & 0.836 \\
+        \hline
+        Season(Spring)$\cdot$Location(Ber) & 0.26276 & 0.09082 & 2.893 & \textbf{0.004} \\
+        Season(Summer)$\cdot$Location(Ber) & 0.09709 & 0.09605 & 1.011 & 0.312 \\
+        Season(Spring)$\cdot$Location(Fra) & 0.36180 & 0.08780 & 4.121 & $<$\textbf{0.001} \\
+        Season(Summer)$\cdot$Location(Fra) & 0.31855 & 0.09565 & 3.330 & $<$\textbf{0.001} \\
+        Season(Spring)$\cdot$Location(Old) & 0.03562 & 0.09822 & 0.363 & 0.717 \\
+        Season(Summer)$\cdot$Location(Old) & 0.26604 & 0.12403 & 2.145 & \textbf{0.032} \\
+    \end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[h]
+\centering
+\caption{Post hoc pairwise comparison of estimated marginal means (emmeans) using a Tukey adjustment for multiple comparisons. Contrast estimates for different locations (Years random effect)}
+\label{tab:contrasts}
+
+\begin{tabular}{lcccc}
+ & Estimate & SE & df & p.value\\
+\hline
+Location = BA: \\ Autumn - Spring & -0.02136 & 0.0604 & -0.354 & 0.9333 \\
+Autumn - Summer & -0.05594 & 0.0590 & -0.948 & 0.6096 \\
+Spring - Summer & -0.03457 & 0.0584 & -0.592 & 0.8244 \\ \hline
+Location = BE: \\ Autumn - Spring & -0.28412 & 0.0643 & -4.419 & \textbf{$<$0.0001} \\
+Autumn - Summer & -0.15303 & 0.0753 & -2.032 & 0.1047 \\
+Spring - Summer & 0.13109 & 0.0526 & 2.492 & \textbf{0.0340} \\ \hline
+Location = FR: \\ Autumn - Spring & -0.38316 & 0.0639 & -6.000 & \textbf{$<$0.0001} \\
+Autumn - Summer & -0.37449 & 0.0747 & -5.012 & \textbf{$<$0.0001} \\
+Spring - Summer & 0.00867 & 0.0702 & 0.124 & 0.9916 \\ \hline
+Location = OL: \\ Autumn - Spring & -0.05698 & 0.0775 & -0.736 & 0.7423 \\
+Autumn - Summer & -0.32198 & 0.1090 & -2.962 & \textbf{0.0086} \\
+Spring - Summer & -0.26500 & 0.1080 & -2.456 & \textbf{0.0374} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\end{document}
